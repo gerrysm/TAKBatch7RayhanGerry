@@ -1,0 +1,450 @@
+{
+	"info": {
+		"_postman_id": "a03d1bb7-f9b6-48de-b8da-c0b41b6f24a7",
+		"name": "Exercise7",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37883013",
+		"_collection_link": "https://bold-equinox-693879.postman.co/workspace/TAKBatch7~56b29230-76dd-4cfb-ad65-129271a5c432/collection/37883013-a03d1bb7-f9b6-48de-b8da-c0b41b6f24a7?action=share&source=collection_link&creator=37883013"
+	},
+	"item": [
+		{
+			"name": "KasirAja",
+			"item": [
+				{
+					"name": "Register",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set(\"pass\", \"pass123\");"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"var response = JSON.parse(responseBody)\r",
+									"pm.collectionVariables.set(\"email\", response.data.email);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"name\": \"{{$randomNamePrefix}}\",\r\n\"email\": \"{{$randomEmail}}\",\r\n\"password\": \"{{pass}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/registration",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"registration"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"var response = JSON.parse(responseBody)\r",
+									"pm.collectionVariables.set(\"token\", response.data.accessToken);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"email\": \"{{email}}\",\r\n\"password\": \"{{pass}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/authentications",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"authentications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Categories",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"var response = JSON.parse(responseBody)\r",
+									"pm.collectionVariables.set(\"categoryId\", response.data.categoryId);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"name\": \"makanan ringan\",\r\n\"description\": \"makanan ringan dari indofood\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/categories",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Categories",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer  {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n\"name\": \"update-minuman\",\r\n\"description\": \"no-minuman\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/categories/4fdc2d4e-fb67-4ef1-bce3-0efd23bf74f8",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"categories",
+								"4fdc2d4e-fb67-4ef1-bce3-0efd23bf74f8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Categories",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}} ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/categories/4fdc2d4e-fb67-4ef1-bce3-0efd23bf74f8",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"categories",
+								"4fdc2d4e-fb67-4ef1-bce3-0efd23bf74f8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "View Categories",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}} ",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/categories",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Customer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"var response = JSON.parse(responseBody)\r",
+									"pm.collectionVariables.set(\"customerId\", response.data.customerId);\r",
+									"\r",
+									"pm.test(\"cek status\", function () {\r",
+									"    pm.expect(response.status).to.equal(\"success\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"cek message\", function () {\r",
+									"    pm.expect(response.message).to.equal(\"Customer berhasil ditambahkan\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"cek name\", function () {\r",
+									"    pm.expect(response.data.name).to.equal(\"Akram Yahya\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"name\": \"Akram Yahya\", \r\n\"phone\": \"081234567890\", \r\n\"address\": \"India\", \r\n\"description\": \"Akram anak pak Yahya\" \r\n} \r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/customers",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"customers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "View Customer",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}} ",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/customers",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"customers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Customer",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}} ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n\"name\": \"Akram Doremi\", \r\n\"phone\": \"08987654421\", \r\n\"address\": \"Nepal\", \r\n\"description\": \"Pelanggan VIP\" \r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/customers/c2c123eb-6809-47c1-9452-a6df7537295d",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"customers",
+								"c2c123eb-6809-47c1-9452-a6df7537295d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}} ",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/customers/c2c123eb-6809-47c1-9452-a6df7537295d",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"customers",
+								"c2c123eb-6809-47c1-9452-a6df7537295d"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL",
+			"value": "https://kasir-api.zelz.my.id",
+			"type": "string"
+		},
+		{
+			"key": "pass",
+			"value": ""
+		},
+		{
+			"key": "email",
+			"value": ""
+		},
+		{
+			"key": "token",
+			"value": ""
+		},
+		{
+			"key": "categoryId",
+			"value": ""
+		},
+		{
+			"key": "customerId",
+			"value": ""
+		}
+	]
+}
